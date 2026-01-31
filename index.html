@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zap design</title>
+    
+    <!-- Favicon Suite -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React and Babel -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+        
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background-color: #e5e7eb;
+            margin: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .sketchy-shadow {
+            box-shadow: 12px 12px 0px 0px rgba(0,0,0,1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @media (max-width: 768px) {
+            .sketchy-shadow {
+                box-shadow: 8px 8px 0px 0px rgba(0,0,0,1);
+            }
+        }
+
+        .sketchy-shadow:hover {
+            box-shadow: 6px 6px 0px 0px rgba(0,0,0,1);
+            transform: translate(4px, 4px);
+        }
+
+        .logo-glow:hover {
+            filter: drop-shadow(0 0 8px rgba(250, 204, 21, 0.4));
+        }
+
+        /* Optimize for performance */
+        * {
+            backface-visibility: hidden;
+        }
+    </style>
+</head>
+<body class="bg-[#e5e7eb] text-black selection:bg-yellow-400">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const Icon = ({ name, size = 24, className = "", fill = "none" }) => {
+            useEffect(() => {
+                if (window.lucide) lucide.createIcons();
+            }, []);
+            return <i data-lucide={name} className={className} style={{ width: size, height: size }}></i>;
+        };
+
+        const App = () => {
+            const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+            const scrollToTop = (e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+
+            return (
+                <div className="min-h-screen flex flex-col overflow-x-hidden">
+                    {/* Navigation */}
+                    <nav className="sticky top-0 z-50 bg-[#e5e7eb]/95 backdrop-blur-md border-b-4 border-black px-4 md:px-6 py-3 md:py-4">
+                        <div className="max-w-6xl mx-auto flex justify-between items-center">
+                            {/* Brand Logo */}
+                            <a href="#" onClick={scrollToTop} className="flex items-center group cursor-pointer h-16 md:h-28 logo-glow transition-all">
+                                <img 
+                                    src="compactlogo.png" 
+                                    alt="Zap Design" 
+                                    className="h-full w-auto object-contain transition-transform group-hover:rotate-3 group-hover:scale-105 active:scale-95"
+                                    onError={(e) => {
+                                        e.target.style.display = 'none';
+                                        e.target.nextSibling.style.display = 'flex';
+                                    }}
+                                />
+                                <div className="hidden h-10 w-10 bg-yellow-400 border-2 border-black items-center justify-center font-black italic text-lg">
+                                    Z
+                                </div>
+                            </a>
+
+                            {/* Desktop Nav */}
+                            <div className="hidden md:flex items-center">
+                                <a href="#work" className="transition-transform hover:scale-110 active:scale-95 h-12 md:h-16 flex items-center">
+                                    <img 
+                                        src="workbutton.png" 
+                                        alt="Work" 
+                                        className="h-full w-auto object-contain"
+                                    />
+                                </a>
+                            </div>
+
+                            <button className="md:hidden p-2 border-2 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-1 active:translate-y-1 transition-all" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                                <Icon name={isMenuOpen ? "x" : "menu"} size={24} />
+                            </button>
+                        </div>
+
+                        {/* Mobile Menu */}
+                        {isMenuOpen && (
+                            <div className="md:hidden absolute top-full left-0 w-full bg-yellow-400 border-b-4 border-black p-8 flex flex-col gap-8 font-black uppercase text-center items-center shadow-xl">
+                                <a href="#work" onClick={() => setIsMenuOpen(false)} className="transition-transform active:scale-95">
+                                    <img 
+                                        src="workbutton.png" 
+                                        alt="Work" 
+                                        className="h-16 w-auto object-contain"
+                                    />
+                                </a>
+                            </div>
+                        )}
+                    </nav>
+
+                    <main className="max-w-6xl mx-auto px-4 md:px-6 py-8 md:py-12 flex-grow">
+                        
+                        {/* Hero Section */}
+                        <section className="mb-16 md:mb-24 flex flex-col items-center text-center">
+                            <div className="mb-12 md:mb-16 w-full max-w-sm md:max-w-lg px-4">
+                                <img 
+                                    src="zaplogo.png" 
+                                    alt="Zap Design Logo" 
+                                    className="w-full h-auto object-contain mx-auto drop-shadow-[8px_8px_0px_rgba(0,0,0,0.15)] md:drop-shadow-[12px_12px_0px_rgba(0,0,0,0.15)]"
+                                />
+                            </div>
+                            
+                            {/* Drawings Showcase */}
+                            <div id="work" className="w-full max-w-5xl space-y-16 md:space-y-24 scroll-mt-24 md:scroll-mt-32">
+                                {[
+                                    { src: 'work1.png', alt: 'Work 01' },
+                                    { src: 'work2.png', alt: 'Work 02' },
+                                    { src: 'work3.png', alt: 'Work 03' },
+                                    { src: 'work4.png', alt: 'Work 04' },
+                                    { src: 'work5.png', alt: 'Work 05' }
+                                ].map((work, index) => (
+                                    <div key={index} className="bg-white border-4 border-black sketchy-shadow overflow-hidden group w-full">
+                                        <img 
+                                            src={work.src} 
+                                            alt={work.alt} 
+                                            loading="lazy"
+                                            className="w-full h-auto object-contain block mx-auto transition-transform duration-500 group-hover:scale-[1.01]"
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    </main>
+
+                    {/* Minimalist Footer */}
+                    <footer className="bg-black text-white py-12 md:py-16 px-6 border-t-8 border-yellow-400">
+                        <div className="max-w-6xl mx-auto flex justify-center">
+                            <button 
+                                onClick={scrollToTop}
+                                className="group flex items-center gap-2 bg-yellow-400 text-black px-6 md:px-8 py-3 font-black uppercase text-xs md:text-sm italic hover:bg-white transition-all active:scale-95"
+                            >
+                                Back to Top <Icon name="arrow-up" size={18} className="group-hover:-translate-y-1 transition-transform" />
+                            </button>
+                        </div>
+                    </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
