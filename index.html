@@ -5,19 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zap design</title>
     
-    <!-- Favicon Suite -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="manifest" href="site.webmanifest">
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- React and Babel -->
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
@@ -29,7 +25,12 @@
 
         body {
             font-family: 'Space Mono', monospace;
-            background-color: #e5e7eb;
+            /* UPDATED: Added Background Image here */
+            background-color: #e5e7eb; /* Fallback color */
+            background-image: url('Newbackground.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             margin: 0;
             -webkit-font-smoothing: antialiased;
         }
@@ -60,7 +61,7 @@
         }
     </style>
 </head>
-<body class="bg-[#e5e7eb] text-black selection:bg-yellow-400">
+<body class="text-black selection:bg-yellow-400">
     <div id="root"></div>
 
     <script type="text/babel">
@@ -151,7 +152,9 @@
                                     { src: 'work2.png', alt: 'Work 02' },
                                     { src: 'work3.png', alt: 'Work 03' },
                                     { src: 'work4.png', alt: 'Work 04' },
-                                    { src: 'work5.png', alt: 'Work 05' }
+                                    { src: 'work5.png', alt: 'Work 05' },
+                                    /* UPDATED: Added Work 6 here */
+                                    { src: 'work6.png', alt: 'Work 06' }
                                 ].map((work, index) => (
                                     <div key={index} className="bg-white border-4 border-black sketchy-shadow overflow-hidden group w-full">
                                         <img 
